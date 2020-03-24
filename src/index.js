@@ -28,9 +28,8 @@ io.on('connection', (socket) => {
     // 而這個事件是有新使用者連進來的時候，會傳入它的username，在這邊把這個資訊附加在socket上面，識別這個使用者。
 
     socket.on('join', (options, callback) => {
-        console.log(options)
         const { error, user } = addUser({ id: socket.id, ...options })
-
+        console.log(user)
         if (error) {
             return callback(error)
         }

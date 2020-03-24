@@ -1,5 +1,5 @@
 const socket = io()
-console.log('進入chat.js')
+
 // Elements
 const $messageForm = document.querySelector('#message-form')
 const $messageFormInput = $messageForm.querySelector('input')
@@ -125,7 +125,6 @@ $sendLocationButton.addEventListener('click', () => {
 })
 
 socket.emit('join', { username, room }, (error) => {
-    console.log('joinn')
     if (error) {
         alert(error)
         location.href = '/'
