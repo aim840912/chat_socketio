@@ -1,9 +1,10 @@
 const socket = io()
-
+console.log('進入chat.js')
 // Elements
 const $messageForm = document.querySelector('#message-form')
 const $messageFormInput = $messageForm.querySelector('input')
 const $messageFormButton = $messageForm.querySelector('button')
+
 const $sendLocationButton = document.querySelector('#send-location')
 const $messages = document.querySelector('#messages')
 
@@ -46,6 +47,23 @@ socket.on('message', (message) => {
         createdAt: moment(message.createdAt).format('h:mm a')
     })
     $messages.insertAdjacentHTML('beforeend', html)
+    // insertAdjacentHTML() 把傳入的字串解析成 HTML 或 XML，並把該節點插入到 DOM 樹指定的位置。
+    // 它不會重新解析被使用的元素，因此他不會破壞該元素裡面原有的元素。
+    // 這避免了序列化的複雜步驟，使得它比直接操作  innerHTML 快上許多。
+
+    // 'beforebegin': 在 element 之前。
+    // 'afterbegin': 在 element 裡面，第一個子元素之前。
+    // 'beforeend': 在 element 裡面，最後一個子元素之後。
+    // 'afterend': 在 element 之後。
+
+    // <!-- beforebegin -->
+    // <p>
+    //   <!-- afterbegin -->
+    //   foo
+    //   <!-- beforeend -->
+    // </p>
+    // <!-- afterend -->
+
     autoscroll()
 })
 
@@ -101,12 +119,13 @@ $sendLocationButton.addEventListener('click', () => {
             longitude: position.coords.longitude
         }, () => {
             $sendLocationButton.removeAttribute('disabled')
-            console.log('Location shared!')  
+            console.log('Location shared!')
         })
     })
 })
 
 socket.emit('join', { username, room }, (error) => {
+    console.log('joinn')
     if (error) {
         alert(error)
         location.href = '/'
